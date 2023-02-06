@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  app:
+    container_name: subscriptionservice
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # args:
+    image: subscriptionservice
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      # - '${APP_PORT:-80}:80'
+      - '80:80'
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
+      CONNECTION_STRING: Server=mh-labs-instance-1.c4kpuy5wuh6q.us-east-1.rds.amazonaws.com;User Id= postgres;Password=Q5xqo8nrCj56NWIXLuer;Database=subscriptionservice
+      # ASPNETCORE_URLS=https://+:443;http://+:80
+      # ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      # ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    restart: always
+    networks:
+      - dotnet-network
+networks:
+  dotnet-network:
+    name: dotnet-network
+    # external: true
